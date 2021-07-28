@@ -27,7 +27,7 @@ $ python main.py
 
 ### 效果截图 (Google Calendar)
 
-<img width="767" alt="Screen Shot 2021-07-29 at 05 06 06" src="https://user-images.githubusercontent.com/26853900/127395921-e9c44725-e2d8-47c9-a410-a5cce3a9de0b.png">
+![Screen Shot 2021-07-29 at 05 32 43](https://user-images.githubusercontent.com/26853900/127399661-8f2a5b17-928e-4fc0-97d3-de3d910615f9.png)
 
 ## TODO
 
