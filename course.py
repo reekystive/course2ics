@@ -158,9 +158,13 @@ class EAMS:
             inf = re.match(
                 r'^".*","(.*)",".*","(.*)",".*","(.*)","(.*)",".*",".*"$', inf_txt)
             teacher = inf.group(1).strip()
-            course_name = inf.group(2).strip()
+            course_name_raw = inf.group(2).strip()
             location = inf.group(3).strip()
             weeks_txt = inf.group(4).strip()
+
+            name_group = re.match(r'^(.*)\((\d+)\)$', course_name_raw)
+            course_name = name_group.group(1).strip()
+            course_code = name_group.group(2).strip()
 
             weeks = []
             for i in range(len(weeks_txt)):
@@ -172,6 +176,7 @@ class EAMS:
                 'end': end_time,
                 'weeks': weeks,
                 'name': course_name,
+                'code': course_code,
                 'teacher': teacher,
                 'location': location
             }
@@ -200,8 +205,10 @@ class EAMS:
                 e.begin = begin_str
                 e.end = end_str
 
-                disc = '授课老师: ' + course['teacher'] + '\n'
-                disc += '授课地点: ' + course['location']
+                disc = ''
+                disc += '授课地点: ' + course['location'] + '\n'
+                disc += '课程序号: ' + course['code'] + '\n'
+                disc += '授课老师: ' + course['teacher']
                 e.description = disc
 
                 c.add(e)
