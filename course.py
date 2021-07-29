@@ -181,7 +181,7 @@ class EAMS:
                 day_str = day.strftime('%Y-%m-%d')
 
                 cfg = ConfigParser()
-                cfg.read('time_table.ini')
+                cfg.read('config.ini')
                 temp = cfg.get('time-table', str(course['start'][1])).strip()
                 begin_time = temp.split('-')[0].strip()
                 temp = cfg.get('time-table', str(course['end'][1])).strip()
