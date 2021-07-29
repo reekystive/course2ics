@@ -62,7 +62,7 @@ class EAMS:
         cookies = self.s.cookies.items()
         success = False
         for item in cookies:
-            if item[0] == 'JSESSIONID' and '.-worker2' in item[1]:
+            if item[0] == 'JSESSIONID' and '.-worker' in item[1]:
                 success = True
                 break
         if not success:
@@ -210,4 +210,4 @@ class EAMS:
                 c.add(e)
 
         with open('courses.ics', 'w', encoding='utf-8') as ics_file:
-            ics_file.writelines(c.get_str())
+            ics_file.write(c.get_str())
