@@ -20,7 +20,8 @@ class EAMS:
         self.config = config
         self.s = requests.Session()
         self.is_logged_in = False
-        print('Init for user', self.config.username)
+        self.is_logged_in_eams = False
+        # print('Init for user', self.config.username)
         ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:88.0)' + \
             ' Gecko/20100101 Firefox/88.0'
         self.s.headers.update({'User-Agent': ua})
@@ -28,7 +29,7 @@ class EAMS:
     def login(self) -> None:
         "执行用户登录"
 
-        print('Logging in')
+        # print('Logging in')
         url = 'https://id.sspu.edu.cn/cas/login'
         r = self.s.get(url)
 
@@ -55,15 +56,16 @@ class EAMS:
         # 检查是否登录成功
         soup = BeautifulSoup(r.text, features='lxml')
         if len(soup.find_all(attrs={'class': 'success'})) > 0:
-            print('Login success')
+            # print('Login success')
             self.is_logged_in = True
         else:
-            print('Login failed')
+            # print('Login failed')
             self.is_logged_in = False
 
     def login_eams(self) -> None:
         "登录教务系统"
 
+        # print('Logging in EAMS')
         self.s.get('https://jx.sspu.edu.cn/eams/login.action')
         cookies = self.s.cookies.items()
         success = False
@@ -72,9 +74,11 @@ class EAMS:
                 success = True
                 break
         if not success:
-            print('Login EAMS failed')
+            # print('Login EAMS failed')
+            self.is_logged_in_eams = False
             return
-        print('Login EAMS success')
+        # print('Login EAMS success')
+        self.is_logged_in_eams = True
 
     def logout_all(self) -> None:
         "执行用户登出"

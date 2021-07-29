@@ -1,19 +1,35 @@
 from course import Config, EAMS
+from sys import stdout
 
+print('==== CourseTable2ICS for SSPU by ReekyStive ====')
 username = input('请输入学号: ').strip()
 password = input('请输入密码: ')
 print()
 
 config = Config(username, password)
 e = EAMS(config)
-e.login()
-e.login_eams()
+try:
+    print('正在登录统一认证...', end=' ')
+    stdout.flush()
+    e.login()
+    if e.is_logged_in == False:
+        exit(1)
+    print('成功')
 
+    print('正在登录教务系统...', end=' ')
+    stdout.flush()
+    e.login_eams()
+    if e.is_logged_in == False:
+        exit(1)
+    print('成功')
+except:
+    print('失败')
+    exit(1)
 print()
+
 sems = e.get_all_semesters()
 e.display_semesters()
-sem = input('请选择学期 ID (默认为最后一个学期): ').strip()
-print()
+sem = input('请输入学期 ID (默认为最后一个学期): ').strip()
 
 if sem == '':
     sem = sems[-1]['id']
@@ -22,17 +38,57 @@ else:
 
 rev_sems = sems
 rev_sems.reverse()
-sem_name = ''
-for item in rev_sems:
-    if item['id'] == sem:
-        sem_name = item['year'] + ' ' + item['name'] + '学期'
+
+while True:
+    sem_name = None
+    for item in rev_sems:
+        if item['id'] == sem:
+            sem_name = item['year'] + ' ' + item['name'] + '学期'
+            break
+
+    if sem_name == None:
+        while True:
+            try:
+                sem = input('学期 ID 有误, 请重新输入: ').strip()
+                sem = int(sem)
+                break
+            except:
+                continue
+    else:
+        print()
+        print(f'正在获取 {sem_name} 课程信息')
+        courses = e.get_courses(sem)
         break
 
-print(f'正在获取 {sem_name} 课程信息')
-courses = e.get_courses(sem)
+if len(courses) == 0:
+    print('未找到任何课程')
+    exit(1)
 
-first_date = input('请输入第一周的第一天对应的日期 (e.g. 2021-08-02): ').strip()
+print('找到课程:')
+for item in courses:
+    print(f'[{str(item["code"])}] {str(item["name"])}')
+print()
+
+date = input('请输入第一周的第一天对应的日期 (e.g. 2021-08-02): ').strip()
+
+while True:
+    if len(date.split('-')) == 3:
+        temp = date.split('-')
+        try:
+            temp[0] = str(int(temp[0])).zfill(4)
+            temp[1] = str(int(temp[1])).zfill(2)
+            temp[2] = str(int(temp[2])).zfill(2)
+            if len(temp[0]) == 4 and len(temp[1]) == 2 and len(temp[2]) == 2:
+                date = temp[0] + '-' + temp[1] + '-' + temp[2]
+                break
+        except:
+            pass
+    date = input('日期格式有误, 请重新输入: ').strip()
+
 print('正在生成 ICS 文件')
-e.generate_ics(courses, first_date)
-
-print('完成')
+try:
+    e.generate_ics(courses, date)
+except:
+    print('失败')
+    exit(1)
+print('已保存: courses.ics')
