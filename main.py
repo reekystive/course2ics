@@ -1,5 +1,21 @@
 from course import Config, EAMS
+from configparser import ConfigParser
 import sys
+
+cfg = ConfigParser()
+cfg.read('config.ini')
+pause_cfg = cfg.get('on-exit', 'pause-on-exit').strip().lower()
+pause_on_exit = False
+if pause_cfg == 'true':
+    pause_on_exit = True
+
+
+def pause() -> None:
+    if not pause_on_exit:
+        return
+    sys.stdin.flush()
+    input('按回车键退出...')
+
 
 print('==== CourseTable2ICS for SSPU by ReekyStive ====')
 username = input('请输入学号: ').strip()
@@ -24,6 +40,7 @@ try:
     print('成功')
 except:
     print('失败')
+    pause()
     sys.exit(1)
 print()
 
@@ -62,6 +79,7 @@ while True:
 
 if len(courses) == 0:
     print('未找到任何课程')
+    pause()
     sys.exit(1)
 
 print('找到课程:')
@@ -90,5 +108,7 @@ try:
     e.generate_ics(courses, date)
 except:
     print('失败')
+    pause()
     sys.exit(1)
 print('已保存: courses.ics')
+pause()
