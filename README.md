@@ -2,7 +2,15 @@
 
 Convert course table to ICS for SSPU
 
+如果你是上海第二工业大学的学生，你可以用这个工具来生成你的课程表对应的 [ICS 文件](https://zh.wikipedia.org/wiki/ICalendar)来导入导入各种日历软件中。
+
 ## 快速开始
+
+下载 [Releases](https://github.com/ReekyStive/CourseTable2ICS/releases/latest) 中打包好的版本即可开始使用（仅限 Windows）。
+
+## 从源代码运行
+
+你需要有 Python3。
 
 ### 安装依赖
 
