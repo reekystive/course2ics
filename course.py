@@ -110,13 +110,20 @@ class EAMS:
     def get_courses(self, semester: int) -> List:
         "获取指定学期的课程信息"
 
+        ids_url = 'https://jx.sspu.edu.cn/eams/courseTableForStd.action'
+        r = self.s.get(ids_url)
+        txt = re.sub(r'\s*', '', r.text)
+        grp = re.match(
+            r'.*?function\s*refreshTable\(.*?\).*?"std".*?"ids","(\d+)".*', txt)
+        ids = grp.group(1)
+
         url = 'https://jx.sspu.edu.cn/eams/courseTableForStd!courseTable.action'
         data = {
             'ignoreHead': '1',
             'setting.kind': 'std',
             'startWeek': '1',
             'semester.id': str(semester),
-            'ids': '256948'
+            'ids': ids
         }
         r = self.s.post(url=url, data=data)
 
