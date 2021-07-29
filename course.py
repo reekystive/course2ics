@@ -1,6 +1,5 @@
 import requests
 import re
-from bs4 import BeautifulSoup
 from typing import List
 from time_table import time_table
 from calender import Calender, Event
@@ -33,16 +32,10 @@ class EAMS:
         url = 'https://id.sspu.edu.cn/cas/login'
         r = self.s.get(url)
 
-        soup = BeautifulSoup(r.text, features='lxml')
-        if len(soup.find_all(attrs={'class': 'success'})) > 0:
-            print('Already logged in')
-            self.is_logged_in = True
-            return
-        else:
-            self.is_logged_in = False
-
         # 登录
-        lt = soup.find('input', attrs={'name': 'lt'}).attrs['value']
+        txt = re.sub(r'\s*', '', r.text)
+        lt = re.match(r'.*?name="lt"\s*value="(.*?)".*', txt) \
+            .group(1).strip()
         data = {
             'username': self.config.username,
             'password': self.config.password,
@@ -54,8 +47,7 @@ class EAMS:
         r = self.s.post(url=url, data=data)
 
         # 检查是否登录成功
-        soup = BeautifulSoup(r.text, features='lxml')
-        if len(soup.find_all(attrs={'class': 'success'})) > 0:
+        if r.text.find('class="success"') != -1:
             # print('Login success')
             self.is_logged_in = True
         else:
@@ -79,17 +71,6 @@ class EAMS:
             return
         # print('Login EAMS success')
         self.is_logged_in_eams = True
-
-    def logout_all(self) -> None:
-        "执行用户登出"
-
-        if not self.is_logged_in:
-            print('Not logged in')
-            return
-
-        self.s.cookies.clear()
-        print('Logged out')
-        self.is_logged_in = False
 
     def get_all_semesters(self) -> List:
         "获得所有学期编号"
