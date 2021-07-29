@@ -202,5 +202,5 @@ class EAMS:
 
                 c.add(e)
 
-        with open('courses.ics', 'w') as ics_file:
+        with open('courses.ics', 'w', encoding='utf-8') as ics_file:
             ics_file.writelines(c.get_str())
