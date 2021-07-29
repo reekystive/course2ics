@@ -1,5 +1,5 @@
 from course import Config, EAMS
-from sys import stdout
+import sys
 
 print('==== CourseTable2ICS for SSPU by ReekyStive ====')
 username = input('请输入学号: ').strip()
@@ -10,21 +10,21 @@ config = Config(username, password)
 e = EAMS(config)
 try:
     print('正在登录统一认证...', end=' ')
-    stdout.flush()
+    sys.stdout.flush()
     e.login()
     if e.is_logged_in == False:
-        exit(1)
+        sys.exit(1)
     print('成功')
 
     print('正在登录教务系统...', end=' ')
-    stdout.flush()
+    sys.stdout.flush()
     e.login_eams()
     if e.is_logged_in == False:
-        exit(1)
+        sys.exit(1)
     print('成功')
 except:
     print('失败')
-    exit(1)
+    sys.exit(1)
 print()
 
 sems = e.get_all_semesters()
@@ -62,7 +62,7 @@ while True:
 
 if len(courses) == 0:
     print('未找到任何课程')
-    exit(1)
+    sys.exit(1)
 
 print('找到课程:')
 for item in courses:
@@ -90,5 +90,5 @@ try:
     e.generate_ics(courses, date)
 except:
     print('失败')
-    exit(1)
+    sys.exit(1)
 print('已保存: courses.ics')
