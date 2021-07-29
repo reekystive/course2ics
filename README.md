@@ -6,6 +6,8 @@ Convert course table to ICS for SSPU
 
 ### 安装依赖
 
+本工具仅使用了 `requests` 第三方包。
+
 ``` bash
 $ pip install -r requirements.txt
 # maybe pip3
@@ -17,6 +19,7 @@ $ pip install -r requirements.txt
 $ python main.py
 # maybe python3
 ```
+
 根据提示即可生成 ICS 文件。
 
 ## Screenshot
@@ -27,7 +30,7 @@ $ python main.py
 
 ### 效果截图 (Google Calendar)
 
-![Screen Shot 2021-07-29 at 05 32 43](https://user-images.githubusercontent.com/26853900/127399661-8f2a5b17-928e-4fc0-97d3-de3d910615f9.png)
+<img width="766" alt="Screen Shot 2021-07-29 at 05 32 43" src="https://user-images.githubusercontent.com/26853900/127399661-8f2a5b17-928e-4fc0-97d3-de3d910615f9.png">
 
 ## TODO
 

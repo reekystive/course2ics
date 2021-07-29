@@ -1,7 +1,7 @@
 import requests
 import re
 from typing import List
-from time_table import time_table
+from configparser import ConfigParser
 from calender import Calender, Event
 import datetime
 
@@ -180,8 +180,12 @@ class EAMS:
                 day = first + delta
                 day_str = day.strftime('%Y-%m-%d')
 
-                begin_time = time_table[course['start'][1]].split('-')[0]
-                end_time = time_table[course['end'][1]].split('-')[1]
+                cfg = ConfigParser()
+                cfg.read('time_table.ini')
+                temp = cfg.get('time-table', str(course['start'][1])).strip()
+                begin_time = temp.split('-')[0].strip()
+                temp = cfg.get('time-table', str(course['end'][1])).strip()
+                end_time = temp.split('-')[1].strip()
                 begin_str = day_str + ' ' + begin_time.strip()
                 end_str = day_str + ' ' + end_time.strip()
 
