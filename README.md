@@ -6,7 +6,7 @@ Convert course table to ICS for SSPU
 
 ## 快速开始
 
-下载 [Releases](https://github.com/ReekyStive/CourseTable2ICS/releases/latest) 中打包好的版本即可开始使用（仅限 Windows）。
+下载 [Releases](https://github.com/ReekyStive/CourseTable2ICS/releases/latest) 中打包好的版本即可开始使用。
 
 ## 从源代码运行
 
