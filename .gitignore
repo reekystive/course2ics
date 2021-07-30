@@ -6,6 +6,10 @@
 
 # Icon file
 icon.ico
+icon.icns
+
+# Compiled files
+*.o
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
