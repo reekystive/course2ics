@@ -207,6 +207,9 @@ class EAMS:
                 disc += '授课老师: ' + course['teacher']
                 e.description = disc
 
+                e.identifier = begin_str + ' ' + course['code']
+                # used to generate uid
+
                 c.add(e)
 
         with open('courses.ics', 'w', encoding='utf-8', newline='\n') as ics_file:
