@@ -1,5 +1,6 @@
 from course import Config, EAMS
 from configparser import ConfigParser
+from getpass import getpass
 import sys
 
 cfg = ConfigParser()
@@ -19,7 +20,7 @@ def pause() -> None:
 
 print('==== CourseTable2ICS for SSPU by ReekyStive ====')
 username = input('请输入学号: ').strip()
-password = input('请输入密码: ')
+password = getpass('请输入密码 (输入时不可见): ')
 print()
 
 config = Config(username, password)
@@ -87,7 +88,7 @@ for item in courses:
     print(f'[{str(item["code"])}] {str(item["name"])}')
 print()
 
-date = input('请输入第一周的第一天对应的日期 (e.g. 2021-08-02): ').strip()
+date = input('请输入第一周的第一天对应的日期 (e.g. 2021-09-13): ').strip()
 
 while True:
     if len(date.split('-')) == 3:
