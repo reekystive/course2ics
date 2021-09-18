@@ -142,7 +142,7 @@ class EAMS:
             start = re.match(
                 r'^index\s*=(\d+)\*unitCount\+(\d+)$', temp[1].strip())
             end = re.match(
-                r'^index\s*=(\d+)\*unitCount\+(\d+)$', temp[3].strip())
+                r'^index\s*=(\d+)\*unitCount\+(\d+)$', temp[-2].strip())
             start_time = (int(start.group(1)) + 1, int(start.group(2)) + 1)
             end_time = (int(end.group(1)) + 1, int(end.group(2)) + 1)
 
