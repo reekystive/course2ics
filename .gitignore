@@ -1,12 +1,10 @@
 # Project specific
 *.ics
+.vscode/
+dist/
 
 # macOS files
 .DS_Store
-
-# Icon file
-icon.ico
-icon.icns
 
 # Compiled files
 *.o

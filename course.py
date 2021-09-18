@@ -5,6 +5,12 @@ from configparser import ConfigParser
 from calender import Calender, Event
 import datetime
 
+# For build
+import os
+prefix = './'
+if not os.path.exists('main.py'):
+    prefix = '../'
+
 
 class Config:
     def __init__(self, username: str, password: str) -> None:
@@ -188,7 +194,7 @@ class EAMS:
                 day_str = day.strftime('%Y-%m-%d')
 
                 cfg = ConfigParser()
-                cfg.read('config.ini')
+                cfg.read(prefix + 'config.ini')
                 temp = cfg.get('time-table', str(course['start'][1])).strip()
                 begin_time = temp.split('-')[0].strip()
                 temp = cfg.get('time-table', str(course['end'][1])).strip()
@@ -212,5 +218,5 @@ class EAMS:
 
                 c.add(e)
 
-        with open('courses.ics', 'w', encoding='utf-8', newline='\n') as ics_file:
+        with open(prefix + 'courses.ics', 'w', encoding='utf-8', newline='\n') as ics_file:
             ics_file.write(c.get_str())

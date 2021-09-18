@@ -1,10 +1,10 @@
-from course import Config, EAMS
+from course import Config, EAMS, prefix
 from configparser import ConfigParser
 from getpass import getpass
 import sys
 
 cfg = ConfigParser()
-cfg.read('config.ini')
+cfg.read(prefix + 'config.ini')
 pause_cfg = cfg.get('on-exit', 'pause-on-exit').strip().lower()
 pause_on_exit = False
 if pause_cfg == 'true':
