@@ -1,4 +1,4 @@
-# CourseTable2ICS
+# course2ics
 
 Convert course table to ICS for SSPU
 
